@@ -17,6 +17,7 @@
 
                     if ( countX == 3){
                          window.alert(char + " WINS!");
+                         location.reload();
                          return true;
                     }
                 }
@@ -32,11 +33,22 @@
 
                     if ( countY == 3){
                          window.alert("WIN!");
+                         location.reload();
                          return true;
                     }
                 }
                 countY = 0;
             }
+            for(i = 0; i <9; i++){
+                if(field[i] == "X" || field[i] == "O" )
+                    countY++;
+                if(countY == 9){
+                window.alert("A strange game. The only winning move is not to play.!");
+                location.reload();
+                return true;
+            }
+                }   
+                
             return false;
         }
 
@@ -45,14 +57,12 @@
            //TODO: Make it smarter.
             if( field[4] == ""){
                 field[4] = "O";
-                updateCells();
                 return;
             }
             else{
                 for(i =0; i<4; i++){
                     if(field[corners[i]] == ""){
                         field[corners[i]]= "O";
-                        updateCells();
                         return;
                     } 
                 }
@@ -61,7 +71,6 @@
             for(i =0; i<4; i++){
                     if(field[edges[i]] == ""){
                         field[edges[i]] = "O";
-                        updateCells();
                         return;
                     } 
                 }
@@ -81,6 +90,7 @@
             updateCells();
             if(checkfield("X") == false){
                 computerTurn();
+                updateCells();
                 checkfield("O");
             }
         }
