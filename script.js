@@ -1,96 +1,121 @@
-        var field = ["", "", "", "", "", "", "", "", ""];
-        var corners = [0, 2, 6, 8];
-        var edges = [1, 3, 5, 7];
+var field = ["", "", "", "", "", "", "", "", ""];
+var corners = [0, 2, 6, 8];
+var edges = [1, 3, 5, 7];
         
-        function  checkfield(char){
-            // TODO: Set Game state (stop play continuing after win)
-            //       Add Diagonal checking, break into smaller functions.         
-            var countX = 0;
-            var countY = 0;
-            
-            for(var i = 0;  i <= 6; i+= 3){
-                for(var j = 0; j < 3; j++){
-                    if(field[i + j] == char){
-                        countX++;
-                    }
-                    else countX = 0;
+function  checkX(char){
+    var count = 0;
+    for(var i = 0;  i <= 6; i+= 3){
+        for(var j = 0; j < 3; j++){
+            if(field[i + j] == char){
+                count++;
+            }
+            else count = 0;
 
-                    if ( countX == 3){
-                         window.alert(char + " WINS!");
-                         location.reload();
-                         return true;
-                    }
-                }
-                countX = 0;
+            if ( count == 3){
+                    window.alert(char + " WINS!");
+                    location.reload();
+            }
+        }
+        count = 0;
+    }
+}
+
+function checkY(char){
+    var count = 0;
+    for( j = 0; j < 3; j++){
+        for( i = 0;  i <= 6; i+= 3){
+            if(field[i + j] == char){
+                count++;
             }
 
-            for(var j = 0; j < 3; j++){
-                for(var i = 0;  i <= 6; i+= 3){
-                    if(field[i + j] == char){
-                        countY++;
-                    }
-                    else countY = 0;
-
-                    if ( countY == 3){
-                         window.alert("WIN!");
-                         location.reload();
-                         return true;
-                    }
-                }
-                countY = 0;
+            if ( count == 3){
+                    window.alert(char + " WINS!");
+                    location.reload();
             }
-            for(i = 0; i <9; i++){
-                if(field[i] == "X" || field[i] == "O" )
-                    countY++;
-                if(countY == 9){
-                window.alert("A strange game. The only winning move is not to play.!");
+        }
+        count = 0;
+    }
+}
+
+function checkDiagonal(char){
+    var count = 0;
+    for( i = 2;  i <= 6; i += 2){
+        if(field[i] == char){
+            count++;
+        }
+        if ( count == 3){
+                window.alert(char + " WINS!");
                 location.reload();
-                return true;
-            }
-                }   
-                
-            return false;
         }
+    }
+    count = 0;
+    for( i = 0;  i <= 8; i+= 4){
+        if(field[i] == char){
+            count++;
+        }
+    if ( count == 3){
+            window.alert(char + " WINS!");
+            location.reload();
+        }
+    }
+}
+        
+function  checkfield(char){
+    checkX(char);
+    checkY(char);
+    checkDiagonal(char);
+    var count = 0;
+    for(i = 0; i <9; i++){
+        if(field[i] == "X" || field[i] == "O" )
+            count++;
+        if(count == 9){
+        window.alert("A strange game. The only winning move is not to play.!");
+        location.reload();
+        }
+    }
+
+}
 
         
-        function computerTurn(){
-           //TODO: Make it smarter.
-            if( field[4] == ""){
-                field[4] = "O";
-                return;
-            }
-            else{
-                for(i =0; i<4; i++){
-                    if(field[corners[i]] == ""){
-                        field[corners[i]]= "O";
-                        return;
-                    } 
-                }
-            }
-
-            for(i =0; i<4; i++){
-                    if(field[edges[i]] == ""){
-                        field[edges[i]] = "O";
-                        return;
-                    } 
-                }
+function computerTurn(){
+    //TODO: Make it smarter.
+    if( field[4] == ""){
+        field[4] = "O";
+        return;
+    }
+    
+    for(i =0; i<4; i++){
+        if(field[corners[i]] == ""){
+            field[corners[i]]= "O";
+            return;
         }
+    }
+
+    for(i = 0; i<4; i++){
+        if(field[edges[i]] == ""){
+            field[edges[i]] = "O";
+            return;
+        }
+    }
+    return;
+}
         
-        function updateCells(){
-            for(i = 0; i < 9;i++){
-                document.getElementById(i).innerHTML = field[i];
-            }
-        }
+function updateCells(){
+    for(i = 0; i < 9;i++){
+        document.getElementById(i).innerHTML = field[i];
+    }
+}
 
-        function startTurn(cell){
-            if(cell.innerHTML == ""){
-                field[cell.id] = "X";                
-            }
-            else return;
-            updateCells();
-            if(checkfield("X") == false){
-                computerTurn();
-                updateCells();
-                checkfield("O");
-            }
-        }
+function startTurn(cell){
+    if(field[cell.id] == ""){
+        field[cell.id] = "X";
+        updateCells();                
+    } 
+    else{ return;}
+    
+    checkfield("X");
+    computerTurn();
+    updateCells();
+    checkfield("O");
+    
+}
