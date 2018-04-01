@@ -113,9 +113,8 @@ function startTurn(cell){
         checkfield("X");                
     } 
     else{ return;}
-    
-
     computerTurn();
     updateCells();
-    checkfield("O");
+
+    setTimeout(checkfield("O"), 50);
 }
