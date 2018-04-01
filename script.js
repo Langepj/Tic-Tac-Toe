@@ -116,5 +116,5 @@ function startTurn(cell){
     computerTurn();
     updateCells();
 
-    setTimeout(checkfield("O"), 50);
+    setTimeout(checkfield("O"), 500);
 }
