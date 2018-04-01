@@ -109,13 +109,13 @@ function updateCells(){
 function startTurn(cell){
     if(field[cell.id] == ""){
         field[cell.id] = "X";
-        updateCells();                
+        updateCells();
+        checkfield("X");                
     } 
     else{ return;}
     
-    checkfield("X");
+
     computerTurn();
     updateCells();
     checkfield("O");
-    
 }
